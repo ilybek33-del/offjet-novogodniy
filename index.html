@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offjet — Новогодние корпоративные подарки 2025</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<style>
+body {margin:0; font-family:sans-serif; line-height:1.5; color:#333; background:#fefefe;}
+header {position:sticky; top:0; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); z-index:100;}
+nav {display:flex; justify-content:center; flex-wrap:wrap; padding:10px 0;}
+nav button {margin:5px 10px; padding:5px 10px; border:none; background:none; cursor:pointer; font-weight:600; color:#555;}
+nav button.active {color:#c00;}
+section {padding:50px 20px; max-width:1100px; margin:0 auto;}
+h2,h3,h4 {text-align:center; margin-bottom:20px;}
+.grid {display:grid; gap:20px;}
+.grid-3 {grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+.card {background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+img {width:100%; border-radius:10px; margin-bottom:10px;}
+.checks label {display:flex; justify-content:space-between; margin-bottom:10px; cursor:pointer;}
+.checks input {margin-left:10px;}
+.button {display:inline-block; background:#c00; color:#fff; padding:10px 20px; border-radius:8px; text-decoration:none; margin-top:10px;}
+.placeholder-note {font-size:0.85em; color:#888; margin-top:5px; text-align:center;}
+footer {background:#222; color:#aaa; padding:20px; text-align:center; margin-top:40px;}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<!-- Header -->
+<header>
+<nav>
+  <button v-for="section in sections" :key="section.id" @click="scrollTo(section.id)" :class="{active: active===section.id}">{{section.title}}</button>
+</nav>
+</header>
+
+<!-- Hero -->
+<section id="home" style="background:linear-gradient(90deg,#c00,#800);color:#fff; text-align:center;">
+<h2>НОВОГОДНИЕ КОРПОРАТИВНЫЕ ПОДАРКИ 2025</h2>
+<p>Offjet — создаем деловые подарки, которые работают на ваш бренд.</p>
+<p>Готовые решения «под ключ», которые укрепят лояльность команды и впечатлят ключевых партнеров.</p>
+<ul style="list-style:none; padding:0; max-width:400px; margin:20px auto;">
+  <li>Срок изготовления: от 10 рабочих дней</li>
+  <li>Минимальный заказ: от 30 наборов</li>
+</ul>
+<p>🔥 Специальное предложение: Закажите до 30 ноября и получите бесплатную адресную доставку по РФ!</p>
+</section>
+
+<!-- Почему Offjet -->
+<section id="why">
+<h3>Три причины работать с нами</h3>
+<div class="grid grid-3">
+  <div class="card">
+    <h4>Сервис «Под ключ»</h4>
+    <p>Вы выбираете набор, мы берем на себя всё остальное: брендирование, сборку, упаковку и логистику. Экономите время и ресурсы.</p>
+  </div>
+  <div class="card">
+    <h4>Надежность и качество</h4>
+    <p>Работаем только с проверенными поставщиками и предоставляем все сертификаты. Подарки выглядят и ощущаются дорого.</p>
+  </div>
+  <div class="card">
+    <h4>Скорость</h4>
+    <p>Производство запускается в течение 1 дня после согласования макета и договора. Подарки приедут точно вовремя.</p>
+  </div>
+</div>
+</section>
+
+<!-- Готовые наборы -->
+<section id="gifts">
+<h3>ГОТОВЫЕ НАБОРЫ: ХИТЫ ПРОДАЖ</h3>
+<p style="text-align:center;">Все цены включают сборку и базовое брендирование.</p>
+<div class="grid grid-3">
+  <div class="card" v-for="gift in giftSets" :key="gift.name">
+    <img :src="gift.img" :alt="gift.name">
+    <h4>{{gift.name}} — {{gift.price}} ₽</h4>
+    <p>{{gift.description}}</p>
+    <p class="placeholder-note">Реальные фото подарков можно запросить у менеджера</p>
+  </div>
+</div>
+</section>
+
+<!-- Конструктор -->
+<section id="constructor">
+<h3>КОНСТРУКТОР ПОДАРКОВ</h3>
+<p>Выберите компоненты, а мы их упакуем и забрендируем.</p>
+<div class="grid grid-3">
+  <div class="card" v-for="comp in components" :key="comp.type">
+    <h4>{{comp.type}}</h4>
+    <div class="checks">
+      <label v-for="option in comp.options" :key="option.name">
+        <input type="checkbox" v-model="selected[comp.type]" :value="option"> {{option.name}} ({{option.price}} ₽)
+      </label>
+    </div>
+  </div>
+</div>
+<p style="margin-top:20px;font-weight:bold;">Итоговая стоимость: {{totalPrice}} ₽</p>
+<a class="button" href="#contact">Связаться с менеджером</a>
+</section>
+
+<!-- Мастер-классы -->
+<section id="workshops">
+<h3>ТВОРЧЕСКИЕ МАСТЕР-КЛАССЫ</h3>
+<div class="grid grid-3">
+  <div class="card" v-for="w in workshops" :key="w.name">
+    <h4>{{w.name}}</h4>
+    <p>Цена: {{w.price}} ₽</p>
+    <p>{{w.description}}</p>
+  </div>
+</div>
+</section>
+
+<!-- Как заказать -->
+<section id="howto">
+<h3>КАК СДЕЛАТЬ ЗАКАЗ?</h3>
+<ol>
+<li>Выберите решение — набор или идею из этого предложения.</li>
+<li>Свяжитесь с нами — уточним тираж, детали брендирования и подготовим расчет и договор.</li>
+<li>Согласуйте макет — после утверждения дизайна и оплаты запускаем производство.</li>
+</ol>
+</section>
+
+<!-- Контакты -->
+<section id="contact">
+<h3>Готовы обсудить ваши новогодние подарки?</h3>
+<p>Анна, менеджер по работе с клиентами</p>
+<p>📞 +7 (911) 788-01-29</p>
+<p>✉️ anna@offjet.ru</p>
+<p>🌐 offjet.ru</p>
+<p>P.S. Цены действительны до 15 декабря 2024 г. Бесплатная адресная доставка по РФ при заказе до 30 ноября!</p>
+</section>
+
+<footer>
+<p>© 2025 Offjet. Все права защищены.</p>
+</footer>
+
+<script>
+new Vue({
+el:'#app',
+data:{
+  active:'home',
+  sections:[
+    {id:'home',title:'Главная'},
+    {id:'why',title:'Почему Offjet'},
+    {id:'gifts',title:'Готовые наборы'},
+    {id:'constructor',title:'Конструктор'},
+    {id:'workshops',title:'Мастер-классы'},
+    {id:'howto',title:'Как заказать'},
+    {id:'contact',title:'Контакты'}
+  ],
+  giftSets:[
+    {name:'Эко-знак внимания', description:'Эко-сумка из переработанного материала (RPET), брендированная открытка с плиткой шоколада (5 г)', price:'946', img:'https://placehold.co/300x300?text=Эко-знак+внимания'},
+    {name:'Чайный уют', description:'Авторский чай, имбирь в сахаре, деревянное елочное украшение в крафтовой коробке', price:'920', img:'https://placehold.co/300x300?text=Чайный+уют'},
+    {name:'Глинтвейн в подарок', description:'Брендированная кружка, набор специй для глинтвейна, чай, имбирь в сахаре', price:'1580', img:'https://placehold.co/300x300?text=Глинтвейн'},
+    {name:'Арома-уют', description:'Аромадиффузор для дома (100 мл) и ароматическая свеча (100 г) в стильной упаковке', price:'2440', img:'https://placehold.co/300x300?text=Арома-уют'},
+    {name:'ELEGANCE', description:'Изящный бокал для глинтвейна, смесь для напитка, швейцарский шоколад и конфеты в премиум-коробке', price:'5560', img:'https://placehold.co/300x300?text=ELEGANCE'}
+  ],
+  components:[
+    {type:'Основа', options:[{name:'Эко-сумка', price:450},{name:'Крафтовая коробка', price:300},{name:'Премиум-коробка', price:800}]},
+    {type:'Гастрономия', options:[{name:'Премиум-шоколад', price:311},{name:'Спешиалти-кофе', price:890},{name:'Имбирь в сахаре', price:100},{name:'Авторский чай', price:200}]},
+    {type:'Wellness', options:[{name:'Ароматизатор для авто', price:750},{name:'Массажное масло', price:370},{name:'Аромадиффузор', price:600},{name:'Ароматическая свеча', price:400}]}
+  ],
+  selected:{
+    'Основа':[],
+    'Гастрономия':[],
+    'Wellness':[]
+  },
+  workshops:[
+    {name:'Создание свечей из вощины', price:15000, description:'За группу до 10 чел.'},
+    {name:'Роспись шопперов', price:17000, description:'За группу до 10 чел.'},
+    {name:'Сборка браслетов из натуральных камней', price:21000, description:'За группу до 10 чел.'}
+  ]
+},
+computed:{
+  totalPrice(){
+    let sum=0;
+    for(let compType in this.selected){
+      this.selected[compType].forEach(item=>sum+=parseInt(item.price));
+    }
+    return sum;
+  }
+},
+methods:{
+  scrollTo(id){
+    document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    this.active=id;
+  }
+}
+})
+</script>
+
+</div>
+</body>
+</html>
